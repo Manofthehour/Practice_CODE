@@ -1,18 +1,23 @@
-int num = 100;
+int num = 250;
 PVector[] point= new PVector[num];
 PVector[] v= new PVector[num];
 PVector[] ac= new PVector[num];
 float[] sz= new float[num];
+float[] ms= new float[num];
 
+
+int minDiam = 10;
+int maxDiam = 60;
 
 void setup() {
   colorMode(HSB, 360, 100, 100, 100);
   size(displayWidth, displayHeight);
   for (int i=0; i < num; i++) {  
-    sz[i]= random(10, 30);
+    sz[i]= random(minDiam, maxDiam);
     point[i]=new PVector(random(sz[i], width-sz[i]), random(sz[i], height-sz[i]));
     v[i]=PVector.random2D();
     ac[i]=new PVector(0, 0);
+    ms[i]= map(sz[i], minDiam, maxDiam, .1, 1.5);
   }
   noCursor();
 }
@@ -26,20 +31,23 @@ void draw() {
     for (int m=0; m < num; m++) {
       if (i!=m) {
         if (point[i].dist(point[m]) < sz[i]/2 + sz[m]/2) {
-          if (point[i].x < point[m].x) {
-            v[i].x= -abs(v[i].x);
-            v[m].x= abs(v[m].x);
-          } else {
-            v[i].x = abs(v[i].x);
-            v[m].x= -abs(v[m].x);
-          }
-          if (point[i].y < point[m].y) {
-            v[i].y= -abs(v[i].y);
-            v[m].y= abs(v[m].y);
-          } else {
-            v[i].y= abs(v[i].y);
-            v[m].y= -abs(v[m].y);
-          }
+//          if (point[i].x < point[m].x) {
+//            v[i].x= -abs(v[i].x);
+//            v[m].x= abs(v[m].x);
+//          } else {
+//            v[i].x = abs(v[i].x);
+//            v[m].x= -abs(v[m].x);
+//          }
+//          if (point[i].y < point[m].y) {
+//            v[i].y= -abs(v[i].y);
+//            v[m].y= abs(v[m].y);
+//          } else {
+//            v[i].y= abs(v[i].y);
+//            v[m].y= -abs(v[m].y);
+//          }
+          v[i] = PVector.sub(point[i], point[m]);
+          v[i].normalize();
+          v[i].div(ms[i]);
         }
       }
     }
