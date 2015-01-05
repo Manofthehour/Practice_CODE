@@ -11,6 +11,8 @@ boolean it = true;//a constant value to continuously run particle system
 Starfield starfield;//Method for the array of stars in space
 
 
+
+
 void setup() {
   Starship = loadImage("fighter-01.png");//Loading the spaceship image
   size(1440, 900);//size of canvas
